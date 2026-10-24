@@ -1,8 +1,8 @@
 import { Route, Routes } from "react-router-dom";
 import MainLayout from "../layouts/MainLayout";
-import Home from "../pages/home";
 import AuthLayout from "../layouts/AuthLayout";
 import Login from "../pages/Login";
+import Home from "../pages/home";
 
 const AppRoutes = () => {
   return (

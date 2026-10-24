@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 
 const Header = () => {
   return (
-    <header className="flex items-center border-b border-b-gray-400 px-14 py-4 backdrop-blur-md">
+    <header className="fixed right-0 left-0 z-50 flex items-center border-b border-b-gray-400 px-14 py-4 backdrop-blur-md">
       <div className="text-primary pr-10 text-lg font-semibold">GEMIX</div>
       <div className="flex-1">
         <ul className="space-x-5">

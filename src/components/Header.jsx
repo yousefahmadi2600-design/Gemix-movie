@@ -1,5 +1,6 @@
 import { Search, User2 } from "lucide-react";
 import { NavLink } from "react-router-dom";
+import Button from "./ui/button";
 
 const Header = () => {
   return (
@@ -15,12 +16,8 @@ const Header = () => {
         </ul>
       </div>
       <div className="flex gap-2">
-        <button className="flex h-10 w-10 items-center justify-center rounded-full border border-gray-600 bg-gray-200 transition-colors duration-200 hover:cursor-pointer hover:bg-gray-300">
-          <Search className="" />
-        </button>
-        <button className="flex h-10 w-10 items-center justify-center rounded-full border border-gray-600 bg-gray-200 transition-colors duration-200 hover:cursor-pointer hover:bg-gray-300">
-          <User2 className="" />
-        </button>
+        <Button children={<Search className="" />} />
+        <Button children={<User2 className="" />} />
       </div>
     </header>
   );

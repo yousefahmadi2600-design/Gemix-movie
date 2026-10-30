@@ -17,8 +17,8 @@ const Home = () => {
     <main>
       <HeroSection />
       <div className="container mx-auto">
-        <ItemSlide items={movies} header={"Trending Movies"} />
-        <ItemSlide items={movies} header={"Trending Series"} />
+        <ItemSlide items={movies} header={"Trending Movies"} time={true}/>
+        <ItemSlide items={movies} header={"Trending Series"} time={true}/>
         <ItemSlide items={movies} header={"New Releases"} />
         <ItemSlide items={movies} header={"From HBO Max"} />
         <ItemSlide items={movies} header={"Popular Series"} />

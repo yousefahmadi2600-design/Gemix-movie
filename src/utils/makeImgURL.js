@@ -1,6 +1,6 @@
 import { imgURL } from "../services/api";
 
-export const makeImgURL = (path, size= 300) => {
-  const URL = `${imgURL}w${size}/${path}`;
+export const makeImgURL = (path, size= 780) => {
+  const URL = `${imgURL}${size}/${path}`;
   return URL;
 };

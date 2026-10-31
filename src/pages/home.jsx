@@ -1,27 +1,22 @@
 import HeroSection from "../components/HeroSection";
 import ItemSlide from "../components/ItemSlide";
-import img from "../assests/images/spiderman.jpg";
 const Home = () => {
-  const movies = [
-    { img: img, title: "Spiderman", gen: "action" },
-    { img: img, title: "Spiderman", gen: "action" },
-    { img: img, title: "Spiderman", gen: "action" },
-    { img: img, title: "Spiderman", gen: "action" },
-    { img: img, title: "Spiderman", gen: "action" },
-    { img: img, title: "Spiderman", gen: "action" },
-    { img: img, title: "Spiderman", gen: "action" },
-    { img: img, title: "Spiderman", gen: "action" },
-    { img: img, title: "Spiderman", gen: "action" },
-  ];
   return (
     <main>
       <HeroSection />
       <div className="container mx-auto">
-        <ItemSlide items={movies} header={"Trending Movies"} time={true}/>
-        <ItemSlide items={movies} header={"Trending Series"} time={true}/>
-        <ItemSlide items={movies} header={"New Releases"} />
-        <ItemSlide items={movies} header={"From HBO Max"} />
-        <ItemSlide items={movies} header={"Popular Series"} />
+        <ItemSlide
+          header={"Trending Movies"}
+          time={true}
+          url={`trending/movie/`}
+        />
+        <ItemSlide
+          header={"Trending Series"}
+          time={true}
+          url={`trending/tv/`}
+        />
+        <ItemSlide header={"New Releases"} url={"movie/now_playing"} />
+        <ItemSlide header={"Popular Movies"} url={"movie/top_rated"}/>
       </div>
     </main>
   );

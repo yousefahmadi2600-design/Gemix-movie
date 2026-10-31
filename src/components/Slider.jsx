@@ -10,6 +10,7 @@ import {
 const Slider = ({ children, ...props }) => {
   return (
     <Swiper
+    className="px-3!"
       modules={[Navigation, Pagination, Scrollbar, A11y, Autoplay]}
       scrollbar={{ draggable: true }}
       {...props}

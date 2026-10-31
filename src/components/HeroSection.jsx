@@ -10,9 +10,9 @@ import {
   Play,
   Star,
 } from "lucide-react";
-import { genres } from "./constants/movieGenre";
 import Button from "./ui/button";
 import { useRef } from "react";
+import { genres } from "../../constants/movieGenre";
 
 const HeroSection = () => {
   const swiperRef = useRef(null);
@@ -30,18 +30,18 @@ const HeroSection = () => {
           slidesPerView={1}
           pagination={{ el: ".my-pagination", clickable: true }}
           className="h-full w-full"
-          children={movieSlice?.map((movie) => (
-            <SwiperSlide className="relative">
+          children={movieSlice?.map((movie, index) => (
+            <SwiperSlide className="relative" key={index}>
               <div
                 className="h-full w-full bg-cover bg-center bg-no-repeat"
                 style={{
                   backgroundImage: `
                linear-gradient(to bottom , transparent, transparent, transparent, #FFF3E1),
-                url(${makeImgURL(movie.backdrop_path, "original")})
+                url(${makeImgURL(movie.backdrop_path)})
        `,
                 }}
               ></div>
-              <div className="pointer-events-none absolute top-0 right-0 bottom-0 left-0 z-10 bg-black/20"></div> 
+              <div className="pointer-events-none absolute top-0 right-0 bottom-0 left-0 z-10 bg-black/20"></div>
               <div className="absolute top-6/10 left-1/20 z-20 h-100 w-100 -translate-y-1/2 text-white">
                 <div>
                   <h2 className="w-full py-10 text-center text-5xl">
@@ -56,7 +56,7 @@ const HeroSection = () => {
                   &nbsp;&middot;&nbsp;{movie.release_date.slice(0, 4)}
                   {genres
                     .filter((genre) =>
-                      movie.genre_ids.some((genID) => genID === genre.id),
+                      movie?.genre_ids?.some((genID) => genID === genre.id),
                     )
                     .map((item) => (
                       <h3>&nbsp;&middot;&nbsp;{item.name}</h3>
@@ -69,9 +69,11 @@ const HeroSection = () => {
                   <button className="bg-primary shadow-primary/70 flex h-10 w-25 items-center justify-center rounded-3xl text-white shadow-lg">
                     <Play /> Play
                   </button>
-                  <Button children={<Bookmark className="stroke-gray-200" />} />
                   <Button
-                    children={<CircleAlert className="stroke-gray-200" />}
+                    children={<Bookmark className="stroke-gray-200 p-0.5" />}
+                  />
+                  <Button
+                    children={<CircleAlert className="stroke-gray-200 p-0.5" />}
                   />
                 </div>
               </div>
@@ -83,7 +85,7 @@ const HeroSection = () => {
         <Button
           children={
             <ChevronLeft
-              className="stroke-gray-200"
+              className="h-full w-full rounded-full stroke-gray-200 p-2"
               onClick={() => {
                 swiperRef.current?.slidePrev();
               }}
@@ -94,7 +96,7 @@ const HeroSection = () => {
         <Button
           children={
             <ChevronRight
-              className="stroke-gray-200"
+              className="h-full w-full rounded-full stroke-gray-200 p-2"
               onClick={() => {
                 swiperRef.current?.slideNext();
               }}

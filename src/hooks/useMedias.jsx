@@ -1,12 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
-import { fetchMovies } from "../services/getMovies";
+import { getMedias } from "../services/getMedias";
 
-const useMovies = (endpoint) => {
+const useMedias = (endpoint) => {
   const { data, isError, isLoading,refetch } = useQuery({
-    queryFn: () => fetchMovies(endpoint),
+    queryFn: () => getMedias(endpoint),
     queryKey: [endpoint],
   });
   return { data, isError, isLoading,refetch };
 };
 
-export default useMovies;
+export default useMedias;

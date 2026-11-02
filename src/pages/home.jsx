@@ -1,5 +1,5 @@
-import HeroSection from "../components/HeroSection";
-import ItemSlide from "../components/ItemSlide";
+import HeroSection from "../components/home/HeroSection";
+import ItemSlide from "../components/ui/ItemSlide";
 const Home = () => {
   return (
     <main>
@@ -16,7 +16,7 @@ const Home = () => {
           url={`trending/tv/`}
         />
         <ItemSlide header={"New Releases"} url={"movie/now_playing"} />
-        <ItemSlide header={"Popular Movies"} url={"movie/top_rated"}/>
+        <ItemSlide header={"Popular Movies"} url={"movie/top_rated"} />
       </div>
     </main>
   );

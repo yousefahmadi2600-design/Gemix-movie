@@ -1,7 +1,7 @@
-import Slider from "../components/Slider";
+import Slider from "../ui/Slider";
 import { SwiperSlide } from "swiper/react";
-import useMovies from "../hooks/useMovies";
-import { makeImgURL } from "../utils/makeImgURL";
+import useMedias from "../../hooks/useMedias";
+import { makeImgURL } from "../../utils/makeImgURL";
 import {
   Bookmark,
   ChevronLeft,
@@ -10,13 +10,13 @@ import {
   Play,
   Star,
 } from "lucide-react";
-import Button from "./ui/button";
+import Button from "../ui/button";
 import { useRef } from "react";
-import { genres } from "../../constants/movieGenre";
+import { genres } from "../../../constants/movieGenre";
 
 const HeroSection = () => {
   const swiperRef = useRef(null);
-  const { data: trendMovies } = useMovies("trending/movie/week");
+  const { data: trendMovies } = useMedias("trending/movie/week");
   const movieSlice = trendMovies?.results?.slice(0, 5);
   return (
     <section className="relative h-190 w-full">
@@ -59,7 +59,7 @@ const HeroSection = () => {
                       movie?.genre_ids?.some((genID) => genID === genre.id),
                     )
                     .map((item) => (
-                      <h3>&nbsp;&middot;&nbsp;{item.name}</h3>
+                      <h3 key={item.id}>&nbsp;&middot;&nbsp;{item.name}</h3>
                     ))}
                 </div>
                 <div>

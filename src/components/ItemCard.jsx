@@ -19,10 +19,12 @@ const ItemCard = ({ item }) => {
           {
             genres.filter((genre) =>
               item?.genre_ids?.some((genID) => genID === genre.id),
-            )[0].name
+            )[0]?.name
           }
           &nbsp;&middot;&nbsp;
-          {item.release_date?item.release_date?.slice(0, 4):item.first_air_date?.slice(0,4)}
+          {item.release_date
+            ? item.release_date?.slice(0, 4)
+            : item.first_air_date?.slice(0, 4)}
         </h2>
       </div>
     </div>

@@ -1,12 +1,15 @@
 import { SwiperSlide } from "swiper/react";
 import Slider from "./Slider";
-import ItemCard from "./ItemCard";
-import Select from "react-select";
-import useMovies from "../hooks/useMovies";
+import ItemCard from "../ItemCard";
+import useMedias from "../../hooks/useMedias";
 import { useEffect, useRef, useState } from "react";
-import Button from "./ui/button";
+import Button from "./button";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
+import ModalDetails from "../ModalDetails";
+import Selector from "./Selector";
 const ItemSlide = ({ header, time = false, url }) => {
+  const [isDetailsOpen, setIsDetailsOpen] = useState(false);
+  const [activeContent, setActiveContent] = useState(null);
   const swiperRef = useRef(null);
   const options = [
     { value: "week", label: "This Week" },
@@ -16,52 +19,23 @@ const ItemSlide = ({ header, time = false, url }) => {
     value: "week",
     label: "This Week",
   });
-  const { data, refetch, isLoading } = useMovies(
+  const { data, refetch, isLoading } = useMedias(
     `${url}${time ? selected.value : ""}`,
   );
   useEffect(() => {
     refetch();
   }, [selected]);
+
   return (
     <section>
-      <div className="flex items-center justify-between mt-6">
+      <div className="mt-6 flex items-center justify-between">
         <div className="flex items-center">
           <h2 className="p-4 text-2xl font-semibold">{header}</h2>
           {time && (
-            <Select
-              value={selected}
-              onChange={setSelected}
-              placeholder={selected}
+            <Selector
               options={options}
-              styles={{
-                control: (baseStyles) => ({
-                  ...baseStyles,
-                  border: 0,
-                  backgroundColor: "#fff3e1",
-                  fontSize: 24,
-                  fontWeight: 600,
-                  boxShadow: 0,
-                }),
-                menu: (baseStyles) => ({
-                  ...baseStyles,
-                  border: "#6f0000",
-                  backgroundColor: "#fff3e1",
-                  zIndex: 20,
-                  padding: 2,
-                  borderRadius: 5,
-                }),
-                option: (baseStyles, { isSelected, isFocused }) => ({
-                  ...baseStyles,
-                  borderRadius: 5,
-                  backgroundColor: isSelected
-                    ? "#6f0000"
-                    : isFocused
-                      ? "#6f00009c"
-                      : "#fff3e1",
-                  color: isFocused ? "white" : isSelected ? "white" : "black",
-                  transition: "all 200ms ease",
-                }),
-              }}
+              selected={selected}
+              setSelected={setSelected}
             />
           )}
         </div>
@@ -69,7 +43,7 @@ const ItemSlide = ({ header, time = false, url }) => {
           <Button
             children={
               <ChevronLeftIcon
-                className="rounded-full p-2 h-full w-full"
+                className="h-full w-full rounded-full p-2"
                 onClick={() => {
                   swiperRef.current?.slidePrev();
                 }}
@@ -98,7 +72,12 @@ const ItemSlide = ({ header, time = false, url }) => {
           ) : (
             <>
               {data?.results?.map((item) => (
-                <SwiperSlide>
+                <SwiperSlide
+                  onClick={() => {
+                    setIsDetailsOpen(!isDetailsOpen);
+                    setActiveContent(item);
+                  }}
+                >
                   <ItemCard item={item} />
                 </SwiperSlide>
               ))}
@@ -106,6 +85,13 @@ const ItemSlide = ({ header, time = false, url }) => {
           )
         }
       />
+      {isDetailsOpen && (
+        <ModalDetails
+          setIsDetailsOpen={setIsDetailsOpen}
+          isDetailsOpen={isDetailsOpen}
+          content={activeContent}
+        />
+      )}
     </section>
   );
 };

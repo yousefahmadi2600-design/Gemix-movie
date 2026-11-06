@@ -36,7 +36,7 @@ const HeroSection = () => {
                 className="h-full w-full bg-cover bg-center bg-no-repeat"
                 style={{
                   backgroundImage: `
-               linear-gradient(to bottom , transparent, transparent, transparent, #FFF3E1),
+               linear-gradient(to bottom , transparent, transparent, transparent,transparent, transparent,rgba(255,243,225,0.1),rgba(255,243,225,0.4),#FFF3E1),
                 url(${makeImgURL(movie.backdrop_path)})
        `,
                 }}
@@ -66,7 +66,7 @@ const HeroSection = () => {
                   <h3 className="line-clamp-3">{movie.overview}</h3>
                 </div>
                 <div className="flex gap-2 py-6 text-black">
-                  <button className="bg-primary shadow-primary/70 flex h-10 w-25 items-center justify-center rounded-3xl text-white shadow-lg">
+                  <button className="bg-primary hover:bg-primary/90 shadow-primary/70 flex h-10 w-25 items-center justify-center rounded-3xl text-white shadow-lg hover:cursor-pointer">
                     <Play /> Play
                   </button>
                   <Button

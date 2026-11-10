@@ -1,20 +1,21 @@
 import Select from "react-select";
 
-const Selector = ({selected,setSelected,options}) => {
+const SeasonSelect = ({ seasonOptions, seasonNum, setSeasonNum }) => {
   return (
     <Select
-      value={selected}
-      onChange={setSelected}
-      placeholder={selected}
-      options={options}
+      options={seasonOptions}
+      value={seasonNum}
+      onChange={setSeasonNum}
       styles={{
         control: (baseStyles) => ({
           ...baseStyles,
           border: 0,
           backgroundColor: "#fff3e1",
-          fontSize: 24,
-          fontWeight: 600,
+          fontSize: 16,
+          fontWeight: 500,
           boxShadow: 0,
+          width: 150,
+          borderRadius: 8,
         }),
         menu: (baseStyles) => ({
           ...baseStyles,
@@ -22,11 +23,11 @@ const Selector = ({selected,setSelected,options}) => {
           backgroundColor: "#fff3e1",
           zIndex: 20,
           padding: 2,
-          borderRadius: 5,
+          borderRadius: 8,
         }),
         option: (baseStyles, { isSelected, isFocused }) => ({
           ...baseStyles,
-          borderRadius: 5,
+          borderRadius: 8,
           backgroundColor: isSelected
             ? "#6f0000"
             : isFocused
@@ -40,4 +41,4 @@ const Selector = ({selected,setSelected,options}) => {
   );
 };
 
-export default Selector;
+export default SeasonSelect;

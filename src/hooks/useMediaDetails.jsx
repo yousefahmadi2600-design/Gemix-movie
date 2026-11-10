@@ -1,9 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 import { getMediaDetails } from "../services/getMediaDetails";
 
-const useMediaDetails = (endpoint, id, { enabled = true }) => {
+const useMediaDetails = (mediaType, id, { enabled = true }) => {
   const { data, isLoading, refetch, isError } = useQuery({
-    queryFn: () => getMediaDetails(endpoint, id),
+    queryFn: () => getMediaDetails(mediaType, id),
     queryKey: [id],
     enabled,
   });

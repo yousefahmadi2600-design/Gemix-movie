@@ -1,7 +1,7 @@
 import { genres } from "../../constants/movieGenre";
 import { makeImgURL } from "../utils/makeImgURL";
 
-const ItemCard = ({ item }) => {
+const MediaCard = ({ item }) => {
   return (
     <div className="group my-4 h-80 rounded-xl hover:cursor-pointer">
       <div className="group-hover:shadow-primary border-primary h-5/6 w-full overflow-hidden rounded-xl shadow-lg transition-all duration-400 group-hover:border">
@@ -31,4 +31,4 @@ const ItemCard = ({ item }) => {
   );
 };
 
-export default ItemCard;
+export default MediaCard;

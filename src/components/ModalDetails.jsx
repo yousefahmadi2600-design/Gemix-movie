@@ -1,5 +1,6 @@
 import {
   Bookmark,
+  ChevronDown,
   Clapperboard,
   ExternalLink,
   Eye,
@@ -9,53 +10,50 @@ import {
   X,
 } from "lucide-react";
 import { makeImgURL } from "../utils/makeImgURL";
-import Button from "./ui/button";
 import { genres } from "../../constants/movieGenre";
 import useMediaDetails from "../hooks/useMediaDetails";
 import { useState } from "react";
-import Select from "react-select";
 import useEpisodes from "../hooks/useEpisodes";
 import EpisodeCard from "./EpisodeCard";
+import { useNavigate } from "react-router-dom";
+import Button from "./ui/Button.jsx";
+import SeasonSelect from "./ui/SeasonSelect.jsx";
 
-const ModalDetails = ({ content, isDetailsOpen, setIsDetailsOpen }) => {
-  const { data: tvDetails } = useMediaDetails(content.media_type, content.id, {
-    enabled: content.media_type === "tv",
+const ModalDetails = ({ media, isDetailsOpen, setIsDetailsOpen }) => {
+  const { data: tvDetailsData } = useMediaDetails(media.media_type, media.id, {
+    enabled: media.media_type === "tv",
   });
+  const tvDetails = tvDetailsData?.data;
+
   const [seasonNum, setSeasonNum] = useState({ value: 1, label: "Season 1" });
   const seasonOptions = Array.from(
     {
-      length: tvDetails?.data?.seasons?.length,
+      length: tvDetails?.number_of_seasons,
     },
     (_, index) => ({ value: index + 1, label: `Season ${index + 1}` }),
   );
 
-  const { data: episodes } = useEpisodes(
-    content.id,
-    seasonNum.value,
-    //  === tvDetails?.data?.seasons?.length &&
-    //   // tvDetails?.data?.in_production
-    //   // ? 0
-    //   // : seasonNum.value,
-  );
+  const { data: episodesData } = useEpisodes(media.id, seasonNum.value);
+  const episodes = episodesData?.data?.episodes;
+  const navigate = useNavigate();
+  const [visibleEpisodeNum, setVisibleEpisodeNum] = useState(20);
+
   return (
     <div
-      className="fixed inset-0 z-50 bg-black/40"
+      className="fixed inset-0 z-30 bg-black/40"
       onClick={() => {
         setIsDetailsOpen(!isDetailsOpen);
       }}
     >
-      <div className="relative h-full w-full overflow-y-scroll pt-10">
-        <div className="absolute top-16 right-70 z-30">
+      <div className="relative z-40 h-full w-full overflow-y-scroll pt-10">
+        <div className="absolute top-16 right-70 z-50">
           <Button
-            children={
-              <X
-                onClick={() => {
-                  setIsDetailsOpen(false);
-                }}
-                className="h-full w-full rounded-full stroke-gray-100 p-2"
-              />
-            }
-          />
+            handleClick={() => {
+              setIsDetailsOpen(false);
+            }}
+          >
+            <X className="h-full w-full rounded-full stroke-gray-100 p-2" />
+          </Button>
         </div>
         <div
           onClick={(e) => e.stopPropagation()}
@@ -67,7 +65,7 @@ const ModalDetails = ({ content, isDetailsOpen, setIsDetailsOpen }) => {
             style={{
               backgroundImage: `
                linear-gradient(to bottom , transparent, transparent, transparent,transparent, transparent,rgba(255,243,225,0.1),rgba(255,243,225,0.4),#FFF3E1),
-                url(${makeImgURL(content.backdrop_path)})
+                url(${makeImgURL(media.backdrop_path)})
        `,
             }}
           >
@@ -76,7 +74,7 @@ const ModalDetails = ({ content, isDetailsOpen, setIsDetailsOpen }) => {
           <div className="-mt-30 mb-15 space-y-2 rounded-b-2xl px-8">
             <div className="flex items-center justify-between">
               <h2 className="text-3xl font-bold">
-                {content.title ? content.title : content.name}
+                {media.title ? media.title : media.name}
               </h2>
               <Button children={<Clapperboard className="stroke-gray-100" />} />
             </div>
@@ -85,94 +83,76 @@ const ModalDetails = ({ content, isDetailsOpen, setIsDetailsOpen }) => {
                 <Star className="size-4.5 fill-yellow-400 stroke-yellow-400" />
               </li>
               <li className="font-bold text-yellow-400">
-                {content.vote_average.toFixed(1)}
+                {media.vote_average.toFixed(1)}
               </li>
               &nbsp;&nbsp;&middot;&nbsp;&nbsp;
               <li className="font-semibold">
-                {content.release_date
-                  ? content.release_date?.slice(0, 4)
-                  : content.first_air_date?.slice(0, 4)}
+                {media.release_date
+                  ? media.release_date?.slice(0, 4)
+                  : media.first_air_date?.slice(0, 4)}
               </li>
             </ul>
             <ul className="flex gap-2 py-4">
               {genres
                 .filter((genre) =>
-                  content?.genre_ids?.some((genID) => genID === genre.id),
+                  media?.genre_ids?.some((genID) => genID === genre.id),
                 )
                 .map((genre, index) => (
                   <li
                     key={index}
-                    className="flex h-7 items-center justify-center rounded-sm border border-gray-400 bg-gray-100 px-2 text-sm text-gray-900"
+                    className="bg-primary/70 flex h-7 items-center justify-center rounded-sm border border-gray-400 px-2 text-sm text-white"
                   >
                     {genre.name}
                   </li>
                 ))}
             </ul>
-            <h3 className="font-medium">{content.overview}</h3>
+            <h3 className="font-medium">{media.overview}</h3>
             <div className="flex gap-2 border-b border-b-gray-600 py-8">
               <button className="bg-primary shadow-primary/70 hover:bg-primary/90 flex h-10 w-25 items-center justify-center rounded-3xl text-white shadow-lg hover:cursor-pointer">
                 <Play /> Play
               </button>
-              <Button
-                children={<Bookmark className="stroke-gray-800 p-0.5" />}
-              />
+              <Button>
+                <Bookmark className="stroke-gray-800 p-0.5" />
+              </Button>
               <Button children={<Heart className="stroke-gray-800 p-0.5" />} />
               <Button
-                children={<ExternalLink className="stroke-gray-800 p-0.5" />}
-              />
-              <Button children={<Eye className="stroke-gray-800 p-0.5" />} />
+                handleClick={() => {
+                  navigate(`/mediaDetails/${media.media_type}/${media.id}`);
+                }}
+              >
+                <ExternalLink className="stroke-gray-800 p-0.5" />
+              </Button>
+              <Button>
+                <Eye className="stroke-gray-800 p-0.5" />
+              </Button>
             </div>
             {tvDetails && (
               <>
                 <div className="flex items-center justify-between py-2">
                   <h3 className="text-2xl font-semibold">Episodes</h3>
-                  <Select
-                    options={seasonOptions}
-                    value={seasonNum}
-                    onChange={setSeasonNum}
-                    styles={{
-                      control: (baseStyles) => ({
-                        ...baseStyles,
-                        border: 0,
-                        backgroundColor: "#fff3e1",
-                        fontSize: 16,
-                        fontWeight: 500,
-                        boxShadow: 0,
-                        width: 150,
-                        borderRadius: 8,
-                      }),
-                      menu: (baseStyles) => ({
-                        ...baseStyles,
-                        border: "#6f0000",
-                        backgroundColor: "#fff3e1",
-                        zIndex: 20,
-                        padding: 2,
-                        borderRadius: 8,
-                      }),
-                      option: (baseStyles, { isSelected, isFocused }) => ({
-                        ...baseStyles,
-                        borderRadius: 8,
-                        backgroundColor: isSelected
-                          ? "#6f0000"
-                          : isFocused
-                            ? "#6f00009c"
-                            : "#fff3e1",
-                        color: isFocused
-                          ? "white"
-                          : isSelected
-                            ? "white"
-                            : "black",
-                        transition: "all 200ms ease",
-                      }),
-                    }}
+                  <SeasonSelect
+                    seasonOptions={seasonOptions}
+                    seasonNum={seasonNum}
+                    setSeasonNum={setSeasonNum}
                   />
                 </div>
                 <div className="max-h-100 overflow-y-scroll px-4">
-                  <div className="">
-                    {episodes?.data?.episodes.map((episode, index) => (
-                      <EpisodeCard key={index} episode={episode} />
-                    ))}
+                  <div>
+                    {episodes
+                      ?.slice(0, visibleEpisodeNum)
+                      .map((episode, index) => (
+                        <EpisodeCard key={index} episode={episode} />
+                      ))}
                   </div>
+                  {visibleEpisodeNum < episodes?.length && (
+                    <button
+                      onClick={() => setVisibleEpisodeNum((prev) => prev + 10)}
+                      className="hover:bg-primary/60 hover:shadow-primary hover:text-cream my-4 ml-3 flex h-9 w-44 items-center justify-center gap-2 rounded-full border border-gray-400 shadow-md transition-all duration-200 hover:cursor-pointer"
+                    >
+                      Load More
+                      <ChevronDown className="hover:stroke-cream" />
+                    </button>
+                  )}
                 </div>
               </>
             )}

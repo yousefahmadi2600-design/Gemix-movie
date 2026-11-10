@@ -10,14 +10,14 @@ import {
   Play,
   Star,
 } from "lucide-react";
-import Button from "../ui/button";
+import Button from "../ui/Button";
 import { useRef } from "react";
 import { genres } from "../../../constants/movieGenre";
 
 const HeroSection = () => {
   const swiperRef = useRef(null);
   const { data: trendMovies } = useMedias("trending/movie/week");
-  const movieSlice = trendMovies?.results?.slice(0, 5);
+  const movieSlice = trendMovies?.data?.results?.slice(0, 5);
   return (
     <section className="relative h-190 w-full">
       {movieSlice?.length > 0 && (
@@ -36,13 +36,13 @@ const HeroSection = () => {
                 className="h-full w-full bg-cover bg-center bg-no-repeat"
                 style={{
                   backgroundImage: `
-               linear-gradient(to bottom , transparent, transparent, transparent,transparent, transparent,rgba(255,243,225,0.1),rgba(255,243,225,0.4),#FFF3E1),
+               linear-gradient(to bottom , transparent, transparent, transparent,transparent, transparent,rgba(255,243,225,0.1),rgba(255,243,225,0.4),white),
                 url(${makeImgURL(movie.backdrop_path)})
        `,
                 }}
               ></div>
               <div className="pointer-events-none absolute top-0 right-0 bottom-0 left-0 z-10 bg-black/20"></div>
-              <div className="absolute top-6/10 left-1/20 z-20 h-100 w-100 -translate-y-1/2 text-white">
+              <div className="absolute top-4/10 left-1/20 z-20 w-100 text-white">
                 <div>
                   <h2 className="w-full py-10 text-center text-5xl">
                     {movie.title}
@@ -69,12 +69,12 @@ const HeroSection = () => {
                   <button className="bg-primary hover:bg-primary/90 shadow-primary/70 flex h-10 w-25 items-center justify-center rounded-3xl text-white shadow-lg hover:cursor-pointer">
                     <Play /> Play
                   </button>
-                  <Button
-                    children={<Bookmark className="stroke-gray-200 p-0.5" />}
-                  />
-                  <Button
-                    children={<CircleAlert className="stroke-gray-200 p-0.5" />}
-                  />
+                  <Button>
+                    <Bookmark className="stroke-gray-200 p-0.5" />
+                  </Button>
+                  <Button>
+                    <CircleAlert className="stroke-gray-200 p-0.5" />
+                  </Button>
                 </div>
               </div>
             </SwiperSlide>

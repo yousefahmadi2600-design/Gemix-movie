@@ -1,6 +1,6 @@
-import { apiKey, baseRequest } from "./api";
+import { baseRequest } from "./api";
 
-export const getMediaDetails = async (endpoint, id) => {
-  const result = await baseRequest.get(`${endpoint}/${id}?api_key=${apiKey}`);
+export const getMediaDetails = async (mediaType, id) => {
+  const result = await baseRequest.get(`${mediaType}/${id}`);
   return result;
 };

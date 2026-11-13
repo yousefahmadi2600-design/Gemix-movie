@@ -19,9 +19,9 @@ import { useNavigate } from "react-router-dom";
 import Button from "./ui/Button.jsx";
 import SeasonSelect from "./ui/SeasonSelect.jsx";
 
-const ModalDetails = ({ media, isDetailsOpen, setIsDetailsOpen }) => {
-  const { data: tvDetailsData } = useMediaDetails(media.media_type, media.id, {
-    enabled: media.media_type === "tv",
+const ModalDetails = ({ media, isMediaOpen, setIsMediaOpen }) => {
+  const { data: tvDetailsData } = useMediaDetails("tv", media.id, {
+    enabled: media.first_air_date ? true : false,
   });
   const tvDetails = tvDetailsData?.data;
 
@@ -33,7 +33,9 @@ const ModalDetails = ({ media, isDetailsOpen, setIsDetailsOpen }) => {
     (_, index) => ({ value: index + 1, label: `Season ${index + 1}` }),
   );
 
-  const { data: episodesData } = useEpisodes(media.id, seasonNum.value);
+  const { data: episodesData } = useEpisodes(media.id, seasonNum.value, {
+    enabled: tvDetails ? true : false,
+  });
   const episodes = episodesData?.data?.episodes;
   const navigate = useNavigate();
   const [visibleEpisodeNum, setVisibleEpisodeNum] = useState(20);
@@ -42,19 +44,20 @@ const ModalDetails = ({ media, isDetailsOpen, setIsDetailsOpen }) => {
     <div
       className="fixed inset-0 z-30 bg-black/40"
       onClick={() => {
-        setIsDetailsOpen(!isDetailsOpen);
+        setIsMediaOpen(!isMediaOpen);
       }}
     >
       <div className="relative z-40 h-full w-full overflow-y-scroll pt-10">
         <div className="absolute top-16 right-70 z-50">
           <Button
             handleClick={() => {
-              setIsDetailsOpen(false);
+              setIsMediaOpen(false);
             }}
           >
             <X className="h-full w-full rounded-full stroke-gray-100 p-2" />
           </Button>
         </div>
+        {console.log(media)}
         <div
           onClick={(e) => e.stopPropagation()}
           className="absolute left-1/2 w-250 -translate-x-1/2 overflow-hidden rounded-3xl"
@@ -117,7 +120,9 @@ const ModalDetails = ({ media, isDetailsOpen, setIsDetailsOpen }) => {
               <Button children={<Heart className="stroke-gray-800 p-0.5" />} />
               <Button
                 handleClick={() => {
-                  navigate(`/mediaDetails/${media.media_type}/${media.id}`);
+                  navigate(
+                    `/mediaDetails/${media.first_air_date ? "tv" : "movie"}/${media.id}`,
+                  );
                 }}
               >
                 <ExternalLink className="stroke-gray-800 p-0.5" />

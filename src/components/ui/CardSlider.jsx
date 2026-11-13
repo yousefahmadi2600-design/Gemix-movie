@@ -7,7 +7,7 @@ import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import ModalDetails from "../ModalDetails";
 import TimeSelect from "./TimeSelect";
 const CardSlider = ({ header, list, selected, setSelected }) => {
-  const [isDetailsOpen, setIsDetailsOpen] = useState(false);
+  const [isMediaOpen, setIsMediaOpen] = useState(false);
   const [activeMedia, setActiveMedia] = useState(null);
   const swiperRef = useRef(null);
   const options = [
@@ -59,7 +59,7 @@ const CardSlider = ({ header, list, selected, setSelected }) => {
         {list?.map((item) => (
           <SwiperSlide
             onClick={() => {
-              setIsDetailsOpen(!isDetailsOpen);
+              setIsMediaOpen(!isMediaOpen);
               setActiveMedia(item);
             }}
           >
@@ -67,10 +67,10 @@ const CardSlider = ({ header, list, selected, setSelected }) => {
           </SwiperSlide>
         ))}
       </Slider>
-      {isDetailsOpen && (
+      {isMediaOpen && (
         <ModalDetails
-          setIsDetailsOpen={setIsDetailsOpen}
-          isDetailsOpen={isDetailsOpen}
+          setIsMediaOpen={setIsMediaOpen}
+          isMediaOpen={isMediaOpen}
           media={activeMedia}
         />
       )}

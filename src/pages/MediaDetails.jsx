@@ -43,7 +43,9 @@ const MediaDetails = () => {
     },
     (_, index) => ({ value: index + 1, label: `Season ${index + 1}` }),
   );
-  const { data: episodes } = useEpisodes(id, seasonNum.value);
+  const { data: episodes } = useEpisodes(id, seasonNum.value, {
+    enabled: mediaType === "tv" ? true : false,
+  });
   const convertHour = (min) => {
     const hour = Math.trunc(min / 60);
     const rest = (min - hour * 60).toFixed(0);

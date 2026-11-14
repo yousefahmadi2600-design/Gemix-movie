@@ -19,7 +19,7 @@ import { useNavigate } from "react-router-dom";
 import Button from "./ui/Button.jsx";
 import SeasonSelect from "./ui/SeasonSelect.jsx";
 
-const ModalDetails = ({ media, isMediaOpen, setIsMediaOpen }) => {
+const ModalDetails = ({ media, setIsMediaOpen }) => {
   const { data: tvDetailsData } = useMediaDetails("tv", media.id, {
     enabled: media.first_air_date ? true : false,
   });
@@ -44,7 +44,7 @@ const ModalDetails = ({ media, isMediaOpen, setIsMediaOpen }) => {
     <div
       className="fixed inset-0 z-30 bg-black/40"
       onClick={() => {
-        setIsMediaOpen(!isMediaOpen);
+        setIsMediaOpen(false);
       }}
     >
       <div className="relative z-40 h-full w-full overflow-y-scroll pt-10">

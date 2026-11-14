@@ -70,7 +70,6 @@ const CardSlider = ({ header, list, selected, setSelected }) => {
       {isMediaOpen && (
         <ModalDetails
           setIsMediaOpen={setIsMediaOpen}
-          isMediaOpen={isMediaOpen}
           media={activeMedia}
         />
       )}

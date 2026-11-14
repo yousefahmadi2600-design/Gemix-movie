@@ -72,7 +72,6 @@ const MediaDetails = () => {
        `,
         }}
       >
-        {console.log(media)}
         <div className="h-full w-full bg-black/10"></div>
         <div className="absolute top-4/10 left-1/20 w-100 text-white">
           <h1 className="w-full py-10 text-center text-5xl">{media?.title}</h1>

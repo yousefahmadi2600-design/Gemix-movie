@@ -57,7 +57,6 @@ const ModalDetails = ({ media, setIsMediaOpen }) => {
             <X className="h-full w-full rounded-full stroke-gray-100 p-2" />
           </Button>
         </div>
-        {console.log(media)}
         <div
           onClick={(e) => e.stopPropagation()}
           className="absolute left-1/2 w-250 -translate-x-1/2 overflow-hidden rounded-3xl"

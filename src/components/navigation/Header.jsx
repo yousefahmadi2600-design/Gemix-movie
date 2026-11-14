@@ -21,8 +21,8 @@ const Header = () => {
         <div className="flex-1">
           <ul className="space-x-5">
             <NavLink to={"/"}>Home</NavLink>
-            <NavLink to={"/login"}>Movies</NavLink>
-            <NavLink to={"/login"}>Series</NavLink>
+            <NavLink to={"/movies"}>Movies</NavLink>
+            <NavLink to={"/tvs"}>Series</NavLink>
             <NavLink to={"/login"}>Explore</NavLink>
             <NavLink to={"/login"}>My space</NavLink>
           </ul>

@@ -6,6 +6,7 @@ import Button from "./Button";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import ModalDetails from "../ModalDetails";
 import TimeSelect from "./TimeSelect";
+import { Link } from "react-router-dom";
 const CardSlider = ({ header, list, selected, setSelected }) => {
   const [isMediaOpen, setIsMediaOpen] = useState(false);
   const [activeMedia, setActiveMedia] = useState(null);
@@ -29,6 +30,10 @@ const CardSlider = ({ header, list, selected, setSelected }) => {
           )}
         </div>
         <div className="flex gap-2">
+          <Link className="flex items-center text-primary hover:text-primary/80" to={""}>
+            see all
+            <ChevronRightIcon className="size-4"/>
+          </Link>
           <Button
             children={
               <ChevronLeftIcon
@@ -68,10 +73,7 @@ const CardSlider = ({ header, list, selected, setSelected }) => {
         ))}
       </Slider>
       {isMediaOpen && (
-        <ModalDetails
-          setIsMediaOpen={setIsMediaOpen}
-          media={activeMedia}
-        />
+        <ModalDetails setIsMediaOpen={setIsMediaOpen} media={activeMedia} />
       )}
     </section>
   );

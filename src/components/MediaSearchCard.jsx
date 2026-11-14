@@ -15,7 +15,6 @@ const MediaSearchCard = ({ result, mediaType, handleClick }) => (
     />
     <div className="flex-1">
       <h2>{result.name}</h2>
-      {console.log(result)}
       <div className="flex flex-wrap gap-2 py-4 text-sm">
         <Star className="size-4.5 fill-yellow-400 stroke-yellow-400" />
         <h3 className="text-yellow-400">{result.vote_average?.toFixed(1)}</h3>

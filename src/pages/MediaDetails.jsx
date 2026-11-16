@@ -164,12 +164,12 @@ const MediaDetails = () => {
           <ul className="flex flex-wrap gap-4">
             {isAllCastVisible
               ? bigCastSlice?.map((cast) => (
-                  <li>
+                  <li key={cast.id}>
                     <CreditsCard credit={cast} />
                   </li>
                 ))
               : smallCastSlice?.map((cast) => (
-                  <li>
+                  <li key={cast.id}>
                     <CreditsCard credit={cast} />
                   </li>
                 ))}
@@ -188,12 +188,12 @@ const MediaDetails = () => {
           <ul className="flex flex-wrap gap-4">
             {isAllCrewVisible
               ? bigCrewSlice?.map((crew) => (
-                  <li>
+                  <li key={crew.id}>
                     <CreditsCard credit={crew} />
                   </li>
                 ))
               : smallCrewSlice?.map((crew) => (
-                  <li>
+                  <li key={crew.id}>
                     <CreditsCard credit={crew} />
                   </li>
                 ))}
@@ -207,8 +207,16 @@ const MediaDetails = () => {
             </button>
           )}
         </div>
-        <CardSlider header={"More Like This"} list={similarMedias?.results} />
-        <CardSlider header={"You Might Like"} list={mediasByGen?.results} />
+        <CardSlider list={similarMedias?.results}>
+          <div className="flex flex-1 items-center">
+            <h2 className="p-4 text-2xl font-semibold">More Like This</h2>
+          </div>
+        </CardSlider>
+        <CardSlider list={mediasByGen?.results}>
+          <div className="flex flex-1 items-center">
+            <h2 className="p-4 text-2xl font-semibold">You Might Like</h2>
+          </div>
+        </CardSlider>
       </div>
     </main>
   );

@@ -1,4 +1,4 @@
-import { genres } from "../../constants/movieGenre";
+import { findGens } from "../utils/fineGens";
 import { makeImgURL } from "../utils/makeImgURL";
 
 const MediaCard = ({ item }) => {
@@ -10,16 +10,14 @@ const MediaCard = ({ item }) => {
           className="h-full w-full transition-all duration-200 group-hover:scale-110"
         />
       </div>
-
       <div className="pt-2">
         <h2 className="line-clamp-1 text-[15px] font-semibold text-gray-950">
           {item.title ? item.title : item.name}
         </h2>
         <h2 className="text-[12px] font-semibold text-gray-600">
           {
-            genres.filter((genre) =>
-              item?.genre_ids?.some((genID) => genID === genre.id),
-            )[0]?.name
+            findGens(item.release_date ? "movie" : "tv", item?.genre_ids)[0]
+              ?.name
           }
           &nbsp;&middot;&nbsp;
           {item.release_date

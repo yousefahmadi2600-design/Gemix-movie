@@ -10,7 +10,6 @@ import {
   X,
 } from "lucide-react";
 import { makeImgURL } from "../utils/makeImgURL";
-import { genres } from "../../constants/movieGenre";
 import useMediaDetails from "../hooks/useMediaDetails";
 import { useState } from "react";
 import useEpisodes from "../hooks/useEpisodes";
@@ -18,6 +17,7 @@ import EpisodeCard from "./EpisodeCard";
 import { useNavigate } from "react-router-dom";
 import Button from "./ui/Button.jsx";
 import SeasonSelect from "./ui/SeasonSelect.jsx";
+import { findGens } from "../utils/fineGens.js";
 
 const ModalDetails = ({ media, setIsMediaOpen }) => {
   const { data: tvDetailsData } = useMediaDetails("tv", media.id, {
@@ -95,18 +95,17 @@ const ModalDetails = ({ media, setIsMediaOpen }) => {
               </li>
             </ul>
             <ul className="flex gap-2 py-4">
-              {genres
-                .filter((genre) =>
-                  media?.genre_ids?.some((genID) => genID === genre.id),
-                )
-                .map((genre, index) => (
-                  <li
-                    key={index}
-                    className="bg-primary/70 flex h-7 items-center justify-center rounded-sm border border-gray-400 px-2 text-sm text-white"
-                  >
-                    {genre.name}
-                  </li>
-                ))}
+              {findGens(
+                media.first_air_date ? "tv" : "movie",
+                media?.genre_ids,
+              ).map((genre, index) => (
+                <li
+                  key={index}
+                  className="bg-primary/70 flex h-7 items-center justify-center rounded-sm border border-gray-400 px-2 text-sm text-white"
+                >
+                  {genre.name}
+                </li>
+              ))}
             </ul>
             <h3 className="font-medium">{media.overview}</h3>
             <div className="flex gap-2 border-b border-b-gray-600 py-8">

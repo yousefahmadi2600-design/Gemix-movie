@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { Search, X } from "lucide-react";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Select from "react-select";
 import { getSearchResults } from "../services/getSearchResults";
 import MediaSearchCard from "./MediaSearchCard";
@@ -8,6 +8,7 @@ import PersonSearchCard from "./PersonSearchCard";
 import { useNavigate } from "react-router-dom";
 
 const ModalSearch = ({ setIsSearchOpen }) => {
+  const searchRef = useRef();
   const selectOptions = [
     { value: "multi", label: "All" },
     { value: "movie", label: "Movies" },
@@ -90,10 +91,17 @@ const ModalSearch = ({ setIsSearchOpen }) => {
             type="text"
             className="h-9.5 flex-1 border-0 px-2 outline-0"
             placeholder="Search movies and TV shows..."
+            ref={searchRef}
           />
           {searchValue && (
             <div className="mr-3 hover:cursor-pointer">
-              <X className="transition-all duration-200 hover:stroke-gray-500" />
+              <X
+                className="transition-all duration-200 hover:stroke-gray-500"
+                onClick={() => {
+                  setSearchValue(null);
+                  searchRef.current.value = "";
+                }}
+              />
             </div>
           )}
         </div>
@@ -119,26 +127,45 @@ const ModalSearch = ({ setIsSearchOpen }) => {
           <div className="max-h-100 overflow-y-scroll py-4">
             <div className="px-2">
               {searchResults?.data?.results?.map((result) =>
+                //   result.media_type === "tv" ||
+                //   result.media_type === "movie" ? (
+                //     <MediaSearchCard
+                //       key={result.id}
+                //       result={result}
+                //       handleClick={onMediaClick}
+                //     />
+                //   ) : (
+                //     <PersonSearchCard
+                //       key={result.id}
+                //       result={result}
+                //       handleClick={onPersonClick}
+                //     />
+                //   ),
+                // )
+
                 result.media_type === "tv" || result.media_type === "movie" ? (
                   <MediaSearchCard
+                    key={result.id}
+                    mediaType={result.media_type}
                     result={result}
-                    mediaType={searchSelect.value}
-                    handleClick={onMediaClick}
                   />
                 ) : result.media_type === "person" ? (
                   <PersonSearchCard
+                    key={result.id}
                     result={result}
                     handleClick={onPersonClick}
                   />
                 ) : searchSelect.value === "tv" ||
                   searchSelect.value === "movie" ? (
                   <MediaSearchCard
+                    key={result.id}
                     handleClick={onMediaClick}
                     result={result}
                     mediaType={searchSelect.value}
                   />
                 ) : (
                   <PersonSearchCard
+                    key={result.id}
                     handleClick={onPersonClick}
                     result={result}
                   />

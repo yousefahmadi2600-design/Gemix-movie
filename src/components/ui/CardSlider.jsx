@@ -5,34 +5,22 @@ import { useRef, useState } from "react";
 import Button from "./Button";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import ModalDetails from "../ModalDetails";
-import TimeSelect from "./TimeSelect";
 import { Link } from "react-router-dom";
-const CardSlider = ({ header, list, selected, setSelected }) => {
+const CardSlider = ({ children, list }) => {
   const [isMediaOpen, setIsMediaOpen] = useState(false);
   const [activeMedia, setActiveMedia] = useState(null);
   const swiperRef = useRef(null);
-  const options = [
-    { value: "week", label: "This Week" },
-    { value: "day", label: "Today" },
-  ];
-
   return (
     <section>
       <div className="mt-6 flex items-center justify-between">
-        <div className="flex items-center">
-          <h2 className="p-4 text-2xl font-semibold">{header}</h2>
-          {selected && (
-            <TimeSelect
-              options={options}
-              selected={selected}
-              setSelected={setSelected}
-            />
-          )}
-        </div>
-        <div className="flex gap-2">
-          <Link className="flex items-center text-primary hover:text-primary/80" to={""}>
+        {children}
+        <div className="flex w-40 gap-2">
+          <Link
+            className="text-primary hover:text-primary/80 flex items-center"
+            to={""}
+          >
             see all
-            <ChevronRightIcon className="size-4"/>
+            <ChevronRightIcon className="size-4" />
           </Link>
           <Button
             children={

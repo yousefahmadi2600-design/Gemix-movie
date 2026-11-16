@@ -12,7 +12,7 @@ import {
 } from "lucide-react";
 import Button from "../ui/Button";
 import { useRef } from "react";
-import { genres } from "../../../constants/movieGenre";
+import { findGens } from "../../utils/fineGens";
 
 const HeroSection = () => {
   const swiperRef = useRef(null);
@@ -54,13 +54,9 @@ const HeroSection = () => {
                     {movie.vote_average.toFixed(1)}
                   </h3>
                   &nbsp;&middot;&nbsp;{movie.release_date.slice(0, 4)}
-                  {genres
-                    .filter((genre) =>
-                      movie?.genre_ids?.some((genID) => genID === genre.id),
-                    )
-                    .map((item) => (
-                      <h3 key={item.id}>&nbsp;&middot;&nbsp;{item.name}</h3>
-                    ))}
+                  {findGens("movie", movie?.genre_ids).map((item) => (
+                    <h3 key={item.id}>&nbsp;&middot;&nbsp;{item.name}</h3>
+                  ))}
                 </div>
                 <div>
                   <h3 className="line-clamp-3">{movie.overview}</h3>

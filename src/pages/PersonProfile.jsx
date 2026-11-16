@@ -89,6 +89,7 @@ const PersonProfile = () => {
         <div className="grid grid-cols-7 gap-4">
           {personMedias?.data?.cast?.map((cast) => (
             <div
+              key={cast.credit_id}
               onClick={() => {
                 setActiveMedia(cast);
                 setIsMediaOpen(!isMediaOpen);

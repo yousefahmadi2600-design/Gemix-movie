@@ -6,6 +6,7 @@ const PersonSearchCard = ({ result, handleClick }) => {
       onClick={() => handleClick(result.id)}
       className="hover:bg-primary/50 group flex gap-5 rounded-xl p-2 transition-all duration-200 hover:cursor-pointer hover:text-white"
     >
+      {console.log(result)}
       <img
         src={makeImgURL(result.profile_path)}
         className="h-20 w-13 rounded-md"

@@ -85,6 +85,7 @@ const PersonProfile = () => {
         </div>
       </div>
       <div className="py-4">
+        {console.log(person)}
         <h2 className="py-3 text-2xl font-semibold">Movies & Shows</h2>
         <div className="grid grid-cols-7 gap-4">
           {personMedias?.data?.cast?.map((cast) => (
